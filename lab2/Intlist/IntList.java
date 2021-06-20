@@ -110,7 +110,7 @@ public class IntList {
             start = start.rest;
         }
         start.rest = B;
-        return null;
+        return pre;
     }
 
 
