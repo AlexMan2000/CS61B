@@ -30,11 +30,12 @@ public class LinkedListDeque<T> {
             ListNode newNode = new ListNode(item, sentinel, sentinel);
             sentinel.next = newNode;
             sentinel.prev = newNode;
+        } else {
+            ListNode head = sentinel.next;
+            ListNode newNode = new ListNode(item, head, sentinel);
+            sentinel.next = newNode;
+            head.prev = newNode;
         }
-        ListNode head = sentinel.next;
-        ListNode newNode = new ListNode(item, head, sentinel);
-        sentinel.next = newNode;
-        head.prev = newNode;
         size += 1;
     }
 
@@ -43,11 +44,12 @@ public class LinkedListDeque<T> {
             ListNode newNode = new ListNode(item, sentinel, sentinel);
             sentinel.next = newNode;
             sentinel.prev = newNode;
+        } else {
+            ListNode tail = sentinel.prev;
+            ListNode newNode = new ListNode(item, sentinel, tail);
+            sentinel.prev = newNode;
+            tail.next = newNode;
         }
-        ListNode tail = sentinel.prev;
-        ListNode newNode = new ListNode(item, sentinel, tail);
-        sentinel.prev = newNode;
-        tail.next = newNode;
         size += 1;
     }
 
@@ -92,11 +94,14 @@ public class LinkedListDeque<T> {
         }
 
         ListNode tail = sentinel.prev;
+
         tail.prev.next = sentinel;
         sentinel.prev = tail.prev;
+
         tail.next = null;
         tail.prev = null;
         size -= 1;
+
         return tail.item;
 
     }
@@ -124,4 +129,5 @@ public class LinkedListDeque<T> {
         }
         return this.getRecursive(index - 1);
     }
+    
 }
