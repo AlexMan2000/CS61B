@@ -4,14 +4,28 @@ public class ArrayDeque<T> {
     private T[] array;
     private int front;
     private double usageRatio;
+    private double downsizeThreshold;
 
     public ArrayDeque() {
         size = 0;
         capacity = 8;
         front = 4;
         usageRatio = 0;
+        downsizeThreshold = judgeThreshold();
         this.array = (T[]) new Object[8];
     }
+
+    private double judgeThreshold(){
+        if(capacity >= 16){
+            downsizeThreshold = 0.25;
+        }else if(8<=capacity&&capacity<16){
+            downsizeThreshold = 0.125;
+        }else if(0<capacity&&capacity<8){
+            downsizeThreshold = 0.001;
+        }
+        return downsizeThreshold;
+    }
+
 
     public void addFirst(T item) {
         if (isEmpty()) {
@@ -56,7 +70,7 @@ public class ArrayDeque<T> {
 
 
     public void printDeque() {
-        if(isEmpty()){
+        if (isEmpty()) {
             return;
         }
         int start = front;
@@ -76,8 +90,8 @@ public class ArrayDeque<T> {
         this.front = (this.front + 1) % capacity;
         size -= 1;
         usageRatio = (float) size / (float) capacity;
-        if (usageRatio < 0.25) {
-            resize(capacity/2);
+        if (usageRatio < downsizeThreshold&&capacity>4) {
+            resize(capacity / 2);
         }
         return result;
     }
@@ -89,8 +103,8 @@ public class ArrayDeque<T> {
         array[last] = null;
         size -= 1;
         usageRatio = (float) size / (float) capacity;
-        if (usageRatio < 0.25) {
-            resize(capacity /2);
+        if (usageRatio < downsizeThreshold&&capacity>4) {
+            resize(capacity / 2);
         }
         return result;
     }
@@ -114,7 +128,7 @@ public class ArrayDeque<T> {
 
     // Resize the array to the size of length.
     private void resize(int len) {
-        if(len==1){
+        if (len == 1) {
             return;
         }
         int last = (front - 1 + size) % capacity;
@@ -131,6 +145,7 @@ public class ArrayDeque<T> {
         this.array = newList;
         this.capacity = len;
         usageRatio = (float) size / (float) capacity;
+        downsizeThreshold = judgeThreshold();
     }
 
     private T[] getArray() {
