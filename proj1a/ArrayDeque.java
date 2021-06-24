@@ -24,7 +24,6 @@ public class ArrayDeque<T> {
             this.front = (this.front - 1 + capacity) % capacity;
             this.array[front] = item;
         }
-        System.out.println(front);
         size += 1;
         usageRatio = (float) size / (float) capacity;
 
@@ -32,7 +31,7 @@ public class ArrayDeque<T> {
 
     public void addLast(T item) {
         if (isEmpty()) {
-            this.array[(front - 1 + capacity) % capacity] = item;
+            this.array[front % capacity] = item;
         } else {
             if (isFull()) {
                 resize(capacity * 2);
@@ -64,6 +63,7 @@ public class ArrayDeque<T> {
             start = (start + 1) % capacity;
         }
         System.out.print(this.array[start].toString() + " ");
+        System.out.println();
     }
 
 
@@ -73,7 +73,6 @@ public class ArrayDeque<T> {
         this.front = (this.front + 1) % capacity;
         size -= 1;
         usageRatio = (float) size / (float) capacity;
-        System.out.println(usageRatio);
         if (usageRatio < 0.25) {
             resize(capacity >> 1);
         }
@@ -144,23 +143,20 @@ public class ArrayDeque<T> {
 
 //    public static void main(String[] args) {
 //        ArrayDeque<Integer> A= new ArrayDeque<Integer>();
-//        A.addFirst(1);
-//        A.addFirst(1);
-//        A.addFirst(1);
-//        A.addFirst(1);
-//        A.addFirst(1);
-//        A.addFirst(1);
-//        A.addFirst(1);
-//        A.addFirst(1);
+//        A.addLast(1);
 //        A.addLast(2);
+//        A.addLast(3);
+//        A.addLast(4);
+//        A.addLast(5);
+//        A.addLast(6);
+//        A.addLast(7);
+//        A.addLast(8);
+//        A.addLast(9);
 //        A.printDeque();
-//        System.out.println("---------");
-//        A.removeFirst();
-//        A.removeFirst();
+//        A.removeLast();
 //        A.printDeque();
-//        System.out.println("-------------");
-//        System.out.println(A.front);
-//        A.printDeque();
+//        System.out.println(A.get(4));
+//
 //    }
 
 }
