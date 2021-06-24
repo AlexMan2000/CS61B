@@ -16,29 +16,33 @@ public class ArrayDeque<T> {
     public void addFirst(T item) {
         if (isEmpty()) {
             this.array[front] = item;
-        }
-        if (isFull()) {
-            resize(capacity * 2);
-        }
+        } else {
+            if (isFull()) {
+                resize(capacity * 2);
+            }
 
-        this.front = (this.front - 1 + capacity) % capacity;
-        this.array[front] = item;
+            this.front = (this.front - 1 + capacity) % capacity;
+            this.array[front] = item;
+        }
+        System.out.println(front);
         size += 1;
-        usageRatio = size / capacity;
+        usageRatio = (float) size / (float) capacity;
 
     }
 
     public void addLast(T item) {
         if (isEmpty()) {
             this.array[(front - 1 + capacity) % capacity] = item;
+        } else {
+            if (isFull()) {
+                resize(capacity * 2);
+            }
+            int last = (front + size) % capacity;
+            this.array[last] = item;
         }
-        if (isFull()) {
-            resize(capacity * 2);
-        }
-        int last = (front + size) % capacity;
-        this.array[last] = item;
         size += 1;
-        usageRatio = size / capacity;
+        usageRatio = (float) size / (float) capacity;
+
     }
 
 
@@ -68,7 +72,11 @@ public class ArrayDeque<T> {
         this.array[this.front] = null;
         this.front = (this.front + 1) % capacity;
         size -= 1;
-        usageRatio = size / capacity;
+        usageRatio = (float) size / (float) capacity;
+        System.out.println(usageRatio);
+        if (usageRatio < 0.25) {
+            resize(capacity >> 1);
+        }
         return result;
     }
 
@@ -78,7 +86,10 @@ public class ArrayDeque<T> {
         T result = array[last];
         array[last] = null;
         size -= 1;
-        usageRatio = size / capacity;
+        usageRatio = (float) size / (float) capacity;
+        if (usageRatio < 0.25) {
+            resize(capacity >> 1);
+        }
         return result;
     }
 
@@ -94,29 +105,30 @@ public class ArrayDeque<T> {
     }
 
 
-    public boolean isFull() {
+    private boolean isFull() {
         return this.size == capacity;
     }
 
 
     // Resize the array to the size of length.
-    public void resize(int len) {
+    private void resize(int len) {
         int last = (front - 1 + size) % capacity;
         T[] newList = (T[]) new Object[len];
         int start = front;
         int newfront = front % len;
+        this.front = newfront;
         while (start % capacity != last) {
             newList[newfront] = this.array[start];
-            newfront += 1;
-            start += 1;
+            newfront = (newfront + 1) % len;
+            start = (start + 1) % capacity;
         }
-        this.front = newfront;
+        newList[newfront] = this.array[start];
         this.array = newList;
         this.capacity = len;
-        usageRatio = size / capacity;
+        usageRatio = (float) size / (float) capacity;
     }
 
-    public T[] getArray() {
+    private T[] getArray() {
         T[] resultArray = (T[]) new Object[size];
         int start = front;
         int last = (start + size - 1) % capacity;
@@ -129,5 +141,26 @@ public class ArrayDeque<T> {
         resultArray[tmp] = this.array[start];
         return resultArray;
     }
+
+//    public static void main(String[] args) {
+//        ArrayDeque<Integer> A= new ArrayDeque<Integer>();
+//        A.addFirst(1);
+//        A.addFirst(1);
+//        A.addFirst(1);
+//        A.addFirst(1);
+//        A.addFirst(1);
+//        A.addFirst(1);
+//        A.addFirst(1);
+//        A.addFirst(1);
+//        A.addLast(2);
+//        A.printDeque();
+//        System.out.println("---------");
+//        A.removeFirst();
+//        A.removeFirst();
+//        A.printDeque();
+//        System.out.println("-------------");
+//        System.out.println(A.front);
+//        A.printDeque();
+//    }
 
 }

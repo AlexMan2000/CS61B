@@ -124,10 +124,28 @@ public class LinkedListDeque<T> {
     }
 
     public T getRecursive(int index) {
-        if (index == 0) {
-            return this.sentinel.prev.item;
+        if (isEmpty()) {
+            return null;
         }
-        return this.getRecursive(index - 1);
+        return helperRecursion(this.sentinel.next, index).item;
     }
-    
+
+    private ListNode helperRecursion(ListNode head, int index) {
+        if (index == 0) {
+            return head;
+        }
+        return helperRecursion(head.next, index - 1);
+    }
+
+//    public static void main(String[] args) {
+//        LinkedListDeque<Integer> A = new LinkedListDeque<>();
+//        A.addFirst(1);
+//        A.addFirst(2);
+//        A.addFirst(3);
+//        A.addLast(4);
+//        A.printDeque();
+//        System.out.println();
+//        System.out.println(A.getRecursive(2));
+//    }
+
 }
