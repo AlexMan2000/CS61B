@@ -1,4 +1,7 @@
+import static org.junit.Assert.*;
+import org.junit.Test;
 /** Performs some basic linked list tests. */
+
 public class LinkedListDequeTest {
 	
 	/* Utility method for printing out empty checks. */
@@ -83,6 +86,31 @@ public class LinkedListDequeTest {
 		printTestStatus(passed);
 		*/
 	}
+
+
+	// Self-defining testing with junit
+//	@Test
+//	public void testingGet(){
+//		LinkedListDeque<String> A = new LinkedListDeque<>();
+//		A.addFirst("haha");
+//		A.addFirst("xixi");
+//		String actual = A.get(1);
+//		String exp = "haha";
+//		assertEquals(exp,actual);
+//	}
+//
+//	@Test
+//	public void testingGetRecursive(){
+//		LinkedListDeque<String> A = new LinkedListDeque<>();
+//		A.addFirst("haha");
+//		A.addFirst("xixi");
+//		A.addFirst("papa");
+//		A.addFirst("gaga");
+//		String actual = A.getRecursive(1);
+//		String exp = "haha";
+//		assertEquals(exp,actual);
+//	}
+
 
 	public static void main(String[] args) {
 		System.out.println("Running tests.\n");
