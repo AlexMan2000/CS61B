@@ -56,6 +56,9 @@ public class ArrayDeque<T> {
 
 
     public void printDeque() {
+        if(isEmpty()){
+            return;
+        }
         int start = front;
         int last = (front + size - 1) % capacity;
         while (start != last) {
@@ -74,7 +77,7 @@ public class ArrayDeque<T> {
         size -= 1;
         usageRatio = (float) size / (float) capacity;
         if (usageRatio < 0.25) {
-            resize(capacity >> 1);
+            resize(capacity/2);
         }
         return result;
     }
@@ -87,7 +90,7 @@ public class ArrayDeque<T> {
         size -= 1;
         usageRatio = (float) size / (float) capacity;
         if (usageRatio < 0.25) {
-            resize(capacity >> 1);
+            resize(capacity /2);
         }
         return result;
     }
@@ -111,6 +114,9 @@ public class ArrayDeque<T> {
 
     // Resize the array to the size of length.
     private void resize(int len) {
+        if(len==1){
+            return;
+        }
         int last = (front - 1 + size) % capacity;
         T[] newList = (T[]) new Object[len];
         int start = front;
@@ -143,19 +149,20 @@ public class ArrayDeque<T> {
 
 //    public static void main(String[] args) {
 //        ArrayDeque<Integer> A= new ArrayDeque<Integer>();
+//        A.addFirst(0);
 //        A.addLast(1);
-//        A.addLast(2);
-//        A.addLast(3);
-//        A.addLast(4);
-//        A.addLast(5);
-//        A.addLast(6);
-//        A.addLast(7);
-//        A.addLast(8);
+//        A.removeFirst();
+//        A.removeLast();
+//        A.addFirst(6);
+//        A.removeLast();
 //        A.addLast(9);
 //        A.printDeque();
+//        System.out.println(A.size());
+//        System.out.println(A.capacity);
 //        A.removeLast();
+//        System.out.println(A.size());
+//        System.out.println(A.capacity);
 //        A.printDeque();
-//        System.out.println(A.get(4));
 //
 //    }
 
