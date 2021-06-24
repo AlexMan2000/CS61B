@@ -5,7 +5,7 @@ public class ArrayDeque<T> {
     private int front;
     private double usageRatio;
 
-    public ArrayDeque(){
+    public ArrayDeque() {
         size = 0;
         capacity = 8;
         front = 4;
@@ -13,118 +13,118 @@ public class ArrayDeque<T> {
         this.array = (T[]) new Object[8];
     }
 
-    public void addFirst(T item){
-        if(isEmpty()){
+    public void addFirst(T item) {
+        if (isEmpty()) {
             this.array[front] = item;
         }
-        if(isFull()){
-            resize(capacity*2);
+        if (isFull()) {
+            resize(capacity * 2);
         }
 
-        this.front = (this.front-1+capacity)%capacity;
+        this.front = (this.front - 1 + capacity) % capacity;
         this.array[front] = item;
-        size+=1;
-        usageRatio = size/capacity;
+        size += 1;
+        usageRatio = size / capacity;
 
     }
 
-    public void addLast(T item){
-        if(isEmpty()){
-            this.array[(front-1+capacity)%capacity] = item;
+    public void addLast(T item) {
+        if (isEmpty()) {
+            this.array[(front - 1 + capacity) % capacity] = item;
         }
-        if(isFull()){
-            resize(capacity*2);
+        if (isFull()) {
+            resize(capacity * 2);
         }
-        int last = (front+size)%capacity;
+        int last = (front + size) % capacity;
         this.array[last] = item;
-        size+=1;
-        usageRatio = size/capacity;
+        size += 1;
+        usageRatio = size / capacity;
     }
 
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return size == 0;
     }
 
 
-    public int size(){
+    public int size() {
         return this.size;
     }
 
 
-    public void printDeque(){
+    public void printDeque() {
         int start = front;
-        int last = (front+size-1)%capacity;
-        while(start!=last){
-            System.out.print(this.array[start].toString()+" ");
-            start = (start+1)%capacity;
+        int last = (front + size - 1) % capacity;
+        while (start != last) {
+            System.out.print(this.array[start].toString() + " ");
+            start = (start + 1) % capacity;
         }
-        System.out.print(this.array[start].toString()+" ");
+        System.out.print(this.array[start].toString() + " ");
     }
 
 
-    public T removeFirst(){
+    public T removeFirst() {
         T result = this.array[this.front];
         this.array[this.front] = null;
-        this.front = (this.front+1)%capacity;
-        size-=1;
-        usageRatio = size/capacity;
+        this.front = (this.front + 1) % capacity;
+        size -= 1;
+        usageRatio = size / capacity;
         return result;
     }
 
 
-    public T removeLast(){
-        int last = (front+size-1)%capacity;
+    public T removeLast() {
+        int last = (front + size - 1) % capacity;
         T result = array[last];
         array[last] = null;
-        size-=1;
-        usageRatio = size/capacity;
+        size -= 1;
+        usageRatio = size / capacity;
         return result;
     }
 
 
-    public T get(int index){
+    public T get(int index) {
         int tmp = 0;
         int start = front;
-        while(tmp<index){
-            tmp+=1;
-            start = (start+1)%capacity;
+        while (tmp < index) {
+            tmp += 1;
+            start = (start + 1) % capacity;
         }
         return array[start];
     }
 
 
-    public boolean isFull(){
-        return this.size==capacity;
+    public boolean isFull() {
+        return this.size == capacity;
     }
 
 
     // Resize the array to the size of length.
-    public void resize(int len){
-        int last = (front-1+size)%capacity;
+    public void resize(int len) {
+        int last = (front - 1 + size) % capacity;
         T[] newList = (T[]) new Object[len];
         int start = front;
-        int newfront = front%len;
-        while(start%capacity!=last){
+        int newfront = front % len;
+        while (start % capacity != last) {
             newList[newfront] = this.array[start];
-            newfront+=1;
-            start+=1;
+            newfront += 1;
+            start += 1;
         }
         this.front = newfront;
         this.array = newList;
         this.capacity = len;
-        usageRatio = size/capacity;
+        usageRatio = size / capacity;
     }
 
-    public T[] getArray(){
+    public T[] getArray() {
         T[] resultArray = (T[]) new Object[size];
         int start = front;
-        int last = (start+size-1)%capacity;
+        int last = (start + size - 1) % capacity;
         int tmp = 0;
-        while(start!=last){
+        while (start != last) {
             resultArray[tmp] = this.array[start];
-            start = (start+1)%capacity;
-            tmp+=1;
+            start = (start + 1) % capacity;
+            tmp += 1;
         }
         resultArray[tmp] = this.array[start];
         return resultArray;
