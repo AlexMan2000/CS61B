@@ -111,6 +111,9 @@ public class ArrayDeque<T> {
 
 
     public T get(int index) {
+        if (index < 0 || index >= array.length) {
+            return null;
+        }
         int tmp = 0;
         int start = front;
         while (tmp < index) {
